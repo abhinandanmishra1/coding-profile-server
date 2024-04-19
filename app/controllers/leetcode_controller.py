@@ -64,7 +64,7 @@ class LeetCodeController:
 
         if response.status_code == 200:
             result = response.json()
-            return result["data"]
+            return result
         else:
             return None
 
@@ -76,7 +76,23 @@ class LeetCodeController:
 
         if response.status_code == 200:
             result = response.json()
-            return result["data"]["matchedUser"]["problemsSolvedBeatsStats"]
+            all_questions_count = result["data"]["allQuestionsCount"]
+            problems_solved_beats_stats = result["data"]["matchedUser"][
+                "problemsSolvedBeatsStats"
+            ]
+            solved_problems_count = result["data"]["matchedUser"]["submitStatsGlobal"]["acSubmissionNum"]
+            result = {}
+            result["All"] = {}
+            for problem in problems_solved_beats_stats:
+                result[problem["difficulty"]] = problem
+            
+            for problem in solved_problems_count:
+                result[problem["difficulty"]]["solvedCount"] = problem["count"]
+            
+            for problem in all_questions_count:
+                result[problem["difficulty"]]["totalCount"] = problem["count"]
+
+            return result
         else:
             return None
 
