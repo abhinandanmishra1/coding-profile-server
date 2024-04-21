@@ -1,4 +1,4 @@
-import requests
+import requests, datetime
 from ..helpers import (
     get_lc_options,
 ) 
@@ -134,8 +134,11 @@ class LeetCodeController:
         else:
             return None
 
-    async def get_user_profile_calendar(self):
-        options = get_lc_options("userProfileCalendar", self.username)
+    async def get_user_profile_calendar(self, year=None):
+        current_year = datetime.datetime.now().year
+        alt_options = {"year": int(year)} if year and int(year) !=  current_year else {}
+        options = get_lc_options("userProfileCalendar", self.username, alt_options=alt_options)
+        print(options)
         response = requests.get(
             options["url"], headers=options["headers"], data=options["body"]
         )

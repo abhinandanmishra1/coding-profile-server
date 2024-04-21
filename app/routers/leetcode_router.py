@@ -119,10 +119,11 @@ async def leetcode(username: str):
 # check if calendar data is correct or not
 # maybe we need date range here
 @lc_router.get("/{username}/calendar")
-async def leetcode(username: str):
+async def leetcode(username: str, year: str):
+    print(year)
     try:
         lc_controller = LeetCodeController(username=username)
-        stats = await lc_controller.get_user_profile_calendar()
+        stats = await lc_controller.get_user_profile_calendar(year=year)
         if stats is None:
             raise HTTPException(status_code=404, detail="User not found")
         return stats["matchedUser"]
