@@ -119,7 +119,7 @@ async def leetcode(username: str):
 # check if calendar data is correct or not
 # maybe we need date range here
 @lc_router.get("/{username}/calendar")
-async def leetcode(username: str, year: str):
+async def leetcode(username: str, year: str = None):
     print(year)
     try:
         lc_controller = LeetCodeController(username=username)
